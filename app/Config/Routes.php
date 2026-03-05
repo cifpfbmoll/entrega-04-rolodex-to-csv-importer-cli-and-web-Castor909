@@ -50,11 +50,27 @@ if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
  * Contact Management Routes
  * --------------------------------------------------------------------
  */
-// Contact web interface routes
+// Contact list and search
 $routes->get('/contacts', 'Contacts::index');
+
+// Create new contact
 $routes->get('/contacts/create', 'Contacts::create');
 $routes->post('/contacts/store', 'Contacts::store');
-$routes->get('/contacts/export', 'Contacts::export');
+
+// Edit existing contact
+$routes->get('/contacts/edit/(:num)', 'Contacts::edit/$1');
+$routes->post('/contacts/update/(:num)', 'Contacts::update/$1');
+
+// Delete contact
+$routes->get('/contacts/delete/(:num)', 'Contacts::delete/$1');
+
+// Import contacts
+$routes->get('/contacts/import', 'Contacts::importForm');
+$routes->post('/contacts/import', 'Contacts::import');
+
+// Export contacts
+$routes->get('/contacts/export-csv', 'Contacts::exportCsv');
+$routes->get('/contacts/export-vcard/(:num)', 'Contacts::exportVcard/$1');
 
 // Default route redirect to contacts
 $routes->get('/', 'Contacts::index');
